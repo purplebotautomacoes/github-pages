@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .dados-salvos {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            display: none;
+        }
+        .mensagem-sucesso {
+            background-color: #dff0d8;
+            color: #3c763d;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 15px;
+            border: 1px solid #d6e9c6;
+            display: none;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Cadastro</h2>
+        <div class="form-group">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" placeholder="Digite seu nome">
+        </div>
+        <div class="form-group">
+            <label for="idade">Idade:</label>
+            <input type="number" id="idade" name="idade" placeholder="Digite sua idade">
+        </div>
+        <div class="form-group">
+            <label for="genero">Gênero:</label>
+            <input type="text" id="genero" name="genero" placeholder="Digite seu gênero">
+        </div>
+        <button onclick="salvarDados()">Salvar</button>
+        
+        <div id="mensagemSucesso" class="mensagem-sucesso">
+            Cadastro realizado com sucesso!
+        </div>
+        
+        <div id="dadosSalvos" class="dados-salvos">
+            <h3>Dados Salvos:</h3>
+            <p id="mostraNome"></p>
+            <p id="mostraIdade"></p>
+            <p id="mostraGenero"></p>
+        </div>
+    </div>
+
+    <script>
+        // Verificar se o usuário veio da página de login
+        if (!document.referrer.includes("login.html")) {
+            // Se quiser, pode redirecionar de volta para a página de login
+            // window.location.href = "login.html";
+            // Ou apenas mostrar um aviso
+            console.log("Acesso direto à página de cadastro");
+        }
+        
+        function salvarDados() {
+            const nome = document.getElementById('nome').value;
+            const idade = document.getElementById('idade').value;
+            const genero = document.getElementById('genero').value;
+            
+            if (!nome || !idade || !genero) {
+                alert("Por favor, preencha todos os campos!");
+                return;
+            }
+            
+            // Mostrar os dados salvos
+            document.getElementById('mostraNome').textContent = "Nome: " + nome;
+            document.getElementById('mostraIdade').textContent = "Idade: " + idade;
+            document.getElementById('mostraGenero').textContent = "Gênero: " + genero;
+            
+            // Exibir a mensagem de sucesso
+            const mensagemSucesso = document.getElementById('mensagemSucesso');
+            mensagemSucesso.style.display = "block";
+            mensagemSucesso.classList.add('fade-in');
+            
+            // Exibir a div com os dados salvos
+            document.getElementById('dadosSalvos').style.display = "block";
+            document.getElementById('dadosSalvos').classList.add('fade-in');
+            
+            // Opcional: salvar dados no localStorage
+            localStorage.setItem('cadastroNome', nome);
+            localStorage.setItem('cadastroIdade', idade);
+            localStorage.setItem('cadastroGenero', genero);
+            
+            // Rolar a página para mostrar a mensagem de sucesso e os dados
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+</html>
